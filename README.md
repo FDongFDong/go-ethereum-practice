@@ -2,7 +2,7 @@
 
 - [genesis.json](#genesis.json-파일-생성)
 - [Geth 명령어](#Geth-명령어)
-- [Geth console 명령어](#Geth-console-명령어
+- [Geth console 명령어](#Geth-console-명령어)
 - [Mining](#Mining)
 ___
 ## genesis.json 파일 생성

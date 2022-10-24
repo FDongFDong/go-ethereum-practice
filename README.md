@@ -64,7 +64,7 @@ geth --networkid 18283 --nodiscover --maxpeers 0 --datadir c:\Geth --mine --mine
 - 옵션
   - --mine : mining을 기본으로 시작
   - --miner.threads 1 : mining에 사용될 thread 1개
-  - --htpp 2 >> c:\Geth\geth2.log : HTTP-RPC 서버를 활성화하고 시스템 로그파일을 생성
+  - --http 2 >> c:\Geth\geth2.log : HTTP-RPC 서버를 활성화하고 시스템 로그파일을 생성
 
 ### HTTP-RPC 옵션이 활성화된 실행 중인 네트워크에 RPC로 접속
 

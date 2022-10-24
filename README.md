@@ -74,6 +74,12 @@ ___
 ```javascript
 // geth console 명령
 
+// 종료 
+exit
+
+// 계정 생성
+personal.newAccount("비밀번호")
+
 // 계정 목록 확인
 eth.accounts;
 
@@ -90,7 +96,7 @@ eth.getBalance(eth.accounts[0]);
 eth.blockNumber;
 
 // 채굴 (사용할 스레드 수)
-miner.start();
+miner.start('스레드 수');
 
 // 채굴 종료
 miner.stop();
@@ -185,3 +191,40 @@ newHelloWorld.at(address).greet.call();
 newHelloWorld.at(address).setGreeting.sendTransaction('Hello Ethereum!', { from: eth.accounts[1] });
 
 ```
+
+## Mining
+채굴을 통해 ether를 보상을 획득
+```
+miner.start(1) or miner.start()
+```
+
+- DAG(Directed Acyclic Graph) 생성
+  - 다소 시간이 걸림(약 15초/1블록)
+  - ASIC 내성을 위해 만들어지는 파일
+    - ASIC : 주문형 반도체
+  - 30,000 블록마다 갱신(약 100시간 마다 갱신되어 약 8MB씩 추가됨)
+
+1. 채굴자 coinbase 확인
+   - eth.coinbase;
+2. 채굴자 변경 
+   - miner.setEtherbase(eth.accounts[1]);
+3. 채굴 진행(븡록생성)
+   - miner.start() 
+4. 채굴 스탑
+   - miner.stop()
+5. 채굴된 이더 확인
+   - eth.getBalance(eth.accounts[0]);
+6. 채굴된 이더를 전송하기 위해 계정 unlock
+   - personal.unlockAccount(eth.accounts[1]);
+7. 이더 전송(트랜잭션 발생 -> 수수료 차감)
+   - eth.sendTransaction({ from: eth.accounts[1], to: eth.accounts[2], value: web3.toWei(10, 'ether') });
+8. 트랜잭션 조회(트랜잭션만 생성되어 있는 상태. 블록을 생성하며 해당 블록에 트랜잭션을 넣어야함. 블록넘버와 체인id 등이 비어있음)
+   - eth.getTransaction('YOUR_TRANSACTION_ADDRESS');
+9. 채굴 진행(블록생성, 트랜잭션을 생성한 계좌의 수수료도 함께 받는다.)
+   - miner.start()
+10. 채굴 스탑
+    - miner.stop()
+11. 트랜잭션 조회(block Number, chainId 값등이 적혀있는 것을 확인)
+    - eth.getTransaction('YOUR_TRANSACTION_ADDRESS');
+12. 잔고 조회
+    - eth.getBalance(eth.accounts[1])

@@ -5,7 +5,7 @@ ___
 ```json
 {
   "config": {
-    "chainId": <arbitrary positive integer>,
+    "chainId": 1337,
     "homesteadBlock": 0,
     "eip150Block": 0,
     "eip155Block": 0,

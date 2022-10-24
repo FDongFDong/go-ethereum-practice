@@ -1,6 +1,7 @@
 ## Go Ethereum(Geth)
 
 - [genesis.json](#genesis.json-파일-생성)
+- [JSON-RPC](#JSON-RPC)
 - [Geth 명령어](#Geth-명령어)
 - [Geth console 명령어](#Geth-console-명령어)
 - [컨트랙트 배포 시나리오](#컨트랙트-배포-시나리오)
@@ -34,6 +35,13 @@ ___
   "timestamp": "0x00"
 }
 ```
+___
+## JSON-RPC
+- JSON으로 인코딩된 원격 프로시저 호출
+- 소량의 데이터 타입과 명령들만을 정의
+- JSON-RPC는 알림(notification, 서버로 데이터가 전송되고 응답을 요구하지 않음)을 허용
+- 다수의 호출이 서버로 전송되고 순서없이 응답되는 것을 허용
+ 
 ___
 ## Geth 명령어
 
@@ -78,11 +86,16 @@ geth attach rpc:<http://localhost:8545>
 geth --networkid 18283 --nodiscover --maxpeers 0 --datadir c:\Geth --mine --miner.threads 1 --allow-insecure-unlock --http --http.addr "0.0.0.0" --http.port 8545 --http.corsdomain "*" --http.api "admin,db,eth,debug,miner,net,shh,txpool,personal,web3" 2>> c:\Geth\geth2.log
 ```
 
-### 계정 잠금 해제 옵션 추가
+### 계정 잠금 해제 옵션 추가(보안상 취약)
 
 ```shell
 geth --networkid 18283 --nodiscover --maxpeers 0 --datadir c:\Geth --mine --miner.threads 1 --allow-insecure-unlock --unlock 1 --http --http.addr "0.0.0.0" --http.port 8545 --http.corsdomain "*" --http.api "admin,db,eth,debug,miner,net,shh,txpool,personal,web3" 2>> c:\Geth\geth3.log
 ```
+- --http : HTTP-RPC 서버를 활성화
+- --http.addr : 서버의 수신 IP 지정(기본값: localhost), "0.0.0.0" -> 모든 인터페이스 허용
+- --http.port : 포트번호 지정 (기본 8545)
+- --http.corsdomain : 허용 IP주소지정 ("*": 모든 IP애서부터 접근 허용)
+- --http.api : RPC를 통합 허가된 명령 지정(기본값: "eth, net, web3")
 
 ### 파일을 이용해서 계정 잠금 해제
 
@@ -179,7 +192,7 @@ eth.pendingTransactions;
 ```javascript
 web3.fromWei(eth.getBalance(eth.accounts[1]), 'ether');
 ```
-
+___
 ## 컨트랙트 배포 시나리오
 ### 필요한 변수 선언
 
@@ -270,7 +283,7 @@ newHelloWorld = eth.contract(helloWorld.abi);
 newHelloWorld.at(address).greet.call();
 newHelloWorld.at(address).setGreeting.sendTransaction('Hello Ethereum!', { from: eth.accounts[1] });
 ```
-
+___
 ## Mining 시나리오
 채굴을 통해 ether를 보상을 획득
 ```
